@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentasi Interaktif: Solar Panel Installation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .electric-dark {
+        background-color: #111827;
+      }
+      .container-dark {
+        background-color: #1f2937;
+        border: 1px solid #374151;
+      }
+      .text-glow {
+        color: #e5e7eb;
+      }
+      .text-highlight {
+        color: #38bdf8;
+      }
+      .text-muted-dark {
+        color: #9ca3af;
+      }
+      .btn-primary-dark {
+        background-color: #0284c7;
+        color: white;
+      }
+      .btn-primary-dark:hover {
+        background-color: #0369a1;
+      }
+      .btn-secondary-dark {
+        background-color: #374151;
+        color: #d1d5db;
+        border: 1px solid #4b5563;
+      }
+      .btn-secondary-dark:hover {
+        background-color: #4b5563;
+      }
+      .btn-icon-dark {
+        color: #9ca3af;
+      }
+      .btn-icon-dark:hover {
+        color: #e5e7eb;
+      }
+
+      .slide {
+        transition: opacity 0.5s ease-in-out;
+        min-height: 550px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      @keyframes flow {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50px);
+        }
+      }
+      .slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        background-image: radial-gradient(#38bdf8 1px, transparent 1px);
+        background-size: 50px 50px;
+        opacity: 0.1;
+        animation: flow 5s linear infinite;
+      }
+      .slide > * {
+        position: relative;
+        z-index: 1;
+      }
+      #slide-1::before {
+        animation-duration: 3s;
+      }
+      #slide-8::before,
+      #slide-9::before {
+        display: none;
+      }
+
+      /* --- Name Rotor Animation --- */
+      @keyframes rotor-spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #name-container {
+        animation: rotor-spin 45s linear infinite;
+      }
+      .contributor-name {
+        position: absolute;
+        font-size: 13px;
+        font-weight: 500;
+        color: #fbbf24;
+        opacity: 0.7;
+        transition: opacity 0.3s, color 0.3s;
+      }
+      .contributor-name:hover {
+        opacity: 1;
+        color: #fde047;
+      }
+
+      /* --- Title "Flash Run" Animation --- */
+      @keyframes flash-in {
+        0% {
+          opacity: 0;
+          transform: translateX(-20px) scale(1.2);
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+        }
+      }
+      .flash-title span {
+        display: inline-block;
+        opacity: 0;
+        animation: flash-in 0.3s ease-out forwards;
+      }
+
+      /* --- Signature Animation --- */
+      #signature-path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: draw-signature 3s ease-in-out 0.5s forwards;
+      }
+
+      @keyframes draw-signature {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      #subtitle-container {
+        position: relative;
+        height: 48px;
+        margin-top: 0.5rem;
+        width: 100%;
+        max-width: 450px;
+      }
+
+      #signature-svg {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        transition: opacity 0.4s ease-out;
+      }
+
+      #final-name {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+      }
+
+      /* --- "Danke" Meteor Animation --- */
+      .danke-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 6rem; /* 96px */
+        font-weight: 900;
+        color: #fbbf24;
+        text-shadow: 0 0 10px #fbb024, 0 0 20px #fbb024, 0 0 30px #e11d48;
+        display: flex;
+      }
+
+      .danke-title span {
+        display: inline-block;
+        opacity: 0;
+        position: relative;
+        animation-fill-mode: forwards;
+        animation-duration: 0.8s;
+        animation-timing-function: cubic-bezier(0.1, 0.8, 0.2, 1);
+      }
+
+      @keyframes meteor-fall-tl {
+        from {
+          opacity: 0;
+          transform: translate(-300px, -300px) rotate(-30deg);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+      @keyframes meteor-fall-tr {
+        from {
+          opacity: 0;
+          transform: translate(300px, -300px) rotate(30deg);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+      @keyframes meteor-fall-bl {
+        from {
+          opacity: 0;
+          transform: translate(-300px, 300px) rotate(30deg);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+      @keyframes meteor-fall-br {
+        from {
+          opacity: 0;
+          transform: translate(300px, 300px) rotate(-30deg);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+      @keyframes meteor-fall-tc {
+        from {
+          opacity: 0;
+          transform: translateY(-400px) scale(1.5);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .meteor-d {
+        animation-name: meteor-fall-tl;
+      }
+      .meteor-a {
+        animation-name: meteor-fall-tr;
+      }
+      .meteor-n {
+        animation-name: meteor-fall-bl;
+      }
+      .meteor-k {
+        animation-name: meteor-fall-br;
+      }
+      .meteor-e {
+        animation-name: meteor-fall-tc;
+      }
+
+      /* 2D Diagram Dark Theme */
+      .component-box-dark {
+        stroke-width: 2;
+        rx: 8;
+        ry: 8;
+      }
+      .component-text-dark {
+        font-size: 14px;
+        font-weight: 600;
+        fill: #e5e7eb;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+
+      #canvas-container {
+        width: 100%;
+        height: 450px;
+        background-color: #1a202c;
+        border-radius: 0.5rem;
+        cursor: grab;
+      }
+      #canvas-container:active {
+        cursor: grabbing;
+      }
+    </style>
+  </head>
+  <body class="electric-dark flex items-center justify-center min-h-screen p-4">
+    <div
+      id="presentation-wrapper"
+      class="w-full max-w-4xl container-dark rounded-2xl shadow-2xl shadow-sky-900/50 overflow-hidden flex flex-col"
+    >
+      <div class="p-6 md:p-8 flex-grow">
+        <!-- Slides Container -->
+        <div id="presentation-container" class="relative h-full">
+          <!-- Slide 1: Judul dengan The Flash -->
+          <div
+            id="slide-1"
+            class="slide flex flex-col items-center justify-center text-center h-full"
+          >
+            <div
+              class="absolute inset-0 pointer-events-none"
+              id="name-container"
+            >
+              <!-- Names will be injected here by JS -->
+            </div>
+            <div class="text-yellow-400 w-24 h-24 mb-6">
+              <svg viewBox="0 0 100 100" fill="currentColor">
+                <circle cx="50" cy="50" r="50" fill="#DC2626" />
+                <path
+                  d="M50,10 A40,40 0 1,1 50,90 A40,40 0 1,1 50,10 M50,12 A38,38 0 1,1 50,88 A38,38 0 1,1 50,12"
+                  fill="white"
+                />
+                <circle cx="50" cy="50" r="34" fill="#DC2626" />
+                <path
+                  d="M 62.25,25 L 43,51.25 L 53.75,51.25 L 37.75,75 L 57,48.75 L 46.25,48.75 L 62.25,25 Z"
+                  fill="yellow"
+                />
+              </svg>
+            </div>
+            <h1
+              id="main-title"
+              class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-wider flash-title"
+            >
+              SOLAR PANEL INSTALLATION
+            </h1>
+            <div id="subtitle-container">
+              <svg id="signature-svg" viewBox="0 0 450 60">
+                <path
+                  id="signature-path"
+                  d="M10 41 C 20 10, 40 10, 50 41 C 55 55, 65 55, 70 41 C 75 30, 85 30, 90 41 L 100 20 C 105 45, 115 45, 120 20 C 125 5, 135 5, 140 20 C 145 45, 155 45, 160 20 L 165 41 L 170 30 C 175 45, 185 45, 190 30 M 205 41 C 208 35, 212 35, 215 41 M 225 41 C 235 20, 245 20, 255 41 L 260 20 M 270 41 C 273 35, 277 35, 280 41 M 290 20 L 290 41 M 300 20 L 310 41 M 320 20 C 330 45, 340 45, 350 20 M 360 41 C 363 35, 367 35, 370 41 M 380 20 L 380 41 M 390 20 L 400 41 L 410 20"
+                  stroke="#38BDF8"
+                  stroke-width="2.5"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <p id="final-name" class="text-lg text-sky-300">
+                Muhammad Nawawi. ST, M.Sc
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 2: Komponen Utama -->
+          <div id="slide-2" class="slide hidden flex flex-col justify-center">
+            <h2 class="text-2xl font-bold text-glow mb-8 text-center">
+              Komponen Utama Sistem
+            </h2>
+            <div
+              class="flex flex-wrap justify-center items-center gap-4 text-center"
+            >
+              <div
+                class="p-4 bg-gray-900/50 border border-gray-700 rounded-lg min-w-[150px]"
+              >
+                <div
+                  class="w-12 h-12 mx-auto mb-2 flex items-center justify-center text-yellow-400"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                </div>
+                <h3 class="font-bold text-glow">Panel Surya</h3>
+                <p class="text-sm text-muted-dark">Sumber Energi</p>
+              </div>
+              <div
+                class="p-4 bg-gray-900/50 border border-gray-700 rounded-lg min-w-[150px]"
+              >
+                <div
+                  class="w-12 h-12 mx-auto mb-2 flex items-center justify-center text-blue-400"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M9 6l-2-2M15 6l2-2m-2 15 2 2M9 18l-2 2"
+                    />
+                  </svg>
+                </div>
+                <h3 class="font-bold text-glow">SCC</h3>
+                <p class="text-sm text-muted-dark">Pengatur Arus</p>
+              </div>
+              <div
+                class="p-4 bg-gray-900/50 border border-gray-700 rounded-lg min-w-[150px]"
+              >
+                <div
+                  class="w-12 h-12 mx-auto mb-2 flex items-center justify-center text-orange-400"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 2v2m0 16v2M4.93 4.93l1.414 1.414M16.24 16.24l1.414 1.414M2 12h2m16 0h2M4.93 19.07l1.414-1.414M16.24 7.76l1.414-1.414"
+                    />
+                  </svg>
+                </div>
+                <h3 class="font-bold text-glow">Baterai</h3>
+                <p class="text-sm text-muted-dark">Penyimpan Energi</p>
+              </div>
+              <div
+                class="p-4 bg-gray-900/50 border border-gray-700 rounded-lg min-w-[150px]"
+              >
+                <div
+                  class="w-12 h-12 mx-auto mb-2 flex items-center justify-center text-green-400"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <h3 class="font-bold text-glow">Inverter</h3>
+                <p class="text-sm text-muted-dark">Pengubah Arus</p>
+              </div>
+            </div>
+            <p class="text-center mt-8 text-muted-dark">
+              Ditambah dengan MCB sebagai pengaman di setiap jalur vital.
+            </p>
+          </div>
+
+          <!-- Slide 3: Flowchart Alur Listrik -->
+          <div id="slide-3" class="slide hidden">
+            <h2 class="text-2xl font-bold text-glow mb-4 text-center">
+              Alur Listrik dari Awal hingga Akhir
+            </h2>
+            <p class="text-center text-muted-dark mb-6">
+              Visualisasi perjalanan energi dari matahari hingga ke stop kontak.
+            </p>
+            <svg viewBox="0 0 800 200" class="w-full">
+              <g transform="translate(50, 80)">
+                <rect
+                  x="-40"
+                  y="-30"
+                  width="80"
+                  height="60"
+                  fill="#4a5568"
+                  class="component-box-dark"
+                  stroke="#facc15"
+                ></rect>
+                <text x="0" y="0" class="component-text-dark">
+                  Panel
+                  <tspan x="0" dy="15">Surya</tspan>
+                </text>
+              </g>
+              <g transform="translate(225, 80)">
+                <rect
+                  x="-40"
+                  y="-30"
+                  width="80"
+                  height="60"
+                  fill="#4a5568"
+                  class="component-box-dark"
+                  stroke="#3b82f6"
+                ></rect>
+                <text x="0" y="0" class="component-text-dark">SCC</text>
+              </g>
+              <g transform="translate(400, 80)">
+                <rect
+                  x="-40"
+                  y="-30"
+                  width="80"
+                  height="60"
+                  fill="#4a5568"
+                  class="component-box-dark"
+                  stroke="#f97316"
+                ></rect>
+                <text x="0" y="0" class="component-text-dark">Baterai</text>
+              </g>
+              <g transform="translate(575, 80)">
+                <rect
+                  x="-40"
+                  y="-30"
+                  width="80"
+                  height="60"
+                  fill="#4a5568"
+                  class="component-box-dark"
+                  stroke="#22c55e"
+                ></rect>
+                <text x="0" y="0" class="component-text-dark">Inverter</text>
+              </g>
+              <g transform="translate(750, 80)">
+                <rect
+                  x="-40"
+                  y="-30"
+                  width="80"
+                  height="60"
+                  fill="#4a5568"
+                  class="component-box-dark"
+                  stroke="#94a3b8"
+                ></rect>
+                <text x="0" y="0" class="component-text-dark">
+                  Stop
+                  <tspan x="0" dy="15">Kontak</tspan>
+                </text>
+              </g>
+              <path d="M 90 75 H 185" stroke="#ef4444" stroke-width="2"></path>
+              <path d="M 90 85 H 185" stroke="#3b82f6" stroke-width="2"></path>
+              <path d="M 265 75 H 360" stroke="#ef4444" stroke-width="2"></path>
+              <path d="M 265 85 H 360" stroke="#3b82f6" stroke-width="2"></path>
+              <path d="M 440 75 H 535" stroke="#ef4444" stroke-width="2"></path>
+              <path d="M 440 85 H 535" stroke="#3b82f6" stroke-width="2"></path>
+              <path d="M 615 75 H 710" stroke="#ef4444" stroke-width="2"></path>
+              <path d="M 615 85 H 710" stroke="#3b82f6" stroke-width="2"></path>
+            </svg>
+            <div class="flex justify-center items-center space-x-4 mt-6">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-1 bg-red-500 rounded"></div>
+                <span class="text-sm text-muted-dark">Kabel Positif (+)</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-1 bg-blue-500 rounded"></div>
+                <span class="text-sm text-muted-dark">Kabel Negatif (-)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4-7 with dark theme -->
+          <div
+            id="slide-4"
+            class="slide hidden flex flex-col md:flex-row items-center gap-8"
+          >
+            <div class="w-full md:w-1/3 text-center md:text-left">
+              <div class="text-sm font-bold text-highlight">LANGKAH 1</div>
+              <h2 class="text-2xl font-bold text-glow mt-1 mb-2">
+                Pengisian Daya
+              </h2>
+              <p class="text-muted-dark">
+                Listrik DC dari Panel Surya melewati MCB DC 1 lalu diatur oleh
+                SCC agar pengisian ke baterai optimal.
+              </p>
+            </div>
+            <div class="w-full md:w-2/3">
+              <svg viewBox="0 0 400 150" class="w-full">
+                <g transform="translate(50, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#facc15"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">
+                    Panel
+                    <tspan x="0" dy="15">Surya</tspan>
+                  </text>
+                </g>
+                <g transform="translate(190, 75)">
+                  <rect
+                    x="-30"
+                    y="-20"
+                    width="60"
+                    height="40"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#ec4899"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark text-xs">
+                    MCB 1
+                  </text>
+                </g>
+                <g transform="translate(330, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#3b82f6"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">SCC</text>
+                </g>
+                <path
+                  d="M 90 70 H 160"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 90 80 H 160"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 70 H 290"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 80 H 290"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div
+            id="slide-5"
+            class="slide hidden flex flex-col md:flex-row items-center gap-8"
+          >
+            <div class="w-full md:w-1/3 text-center md:text-left">
+              <div class="text-sm font-bold text-highlight">LANGKAH 2</div>
+              <h2 class="text-2xl font-bold text-glow mt-1 mb-2">
+                Penyimpanan Energi
+              </h2>
+              <p class="text-muted-dark">
+                Daya yang sudah diatur SCC dialirkan melewati MCB DC 2 menuju
+                Baterai untuk disimpan.
+              </p>
+            </div>
+            <div class="w-full md:w-2/3">
+              <svg viewBox="0 0 400 150" class="w-full">
+                <g transform="translate(50, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#3b82f6"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">SCC</text>
+                </g>
+                <g transform="translate(190, 75)">
+                  <rect
+                    x="-30"
+                    y="-20"
+                    width="60"
+                    height="40"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#8b5cf6"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark text-xs">
+                    MCB 2
+                  </text>
+                </g>
+                <g transform="translate(330, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#f97316"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">Baterai</text>
+                </g>
+                <path
+                  d="M 90 70 H 160"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 90 80 H 160"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 70 H 290"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 80 H 290"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div
+            id="slide-6"
+            class="slide hidden flex flex-col md:flex-row items-center gap-8"
+          >
+            <div class="w-full md:w-1/3 text-center md:text-left">
+              <div class="text-sm font-bold text-highlight">LANGKAH 3</div>
+              <h2 class="text-2xl font-bold text-glow mt-1 mb-2">
+                Konversi Arus
+              </h2>
+              <p class="text-muted-dark">
+                Daya DC dari Baterai diambil, melewati MCB DC 3, dan diubah
+                menjadi arus AC 220V oleh Inverter.
+              </p>
+            </div>
+            <div class="w-full md:w-2/3">
+              <svg viewBox="0 0 400 150" class="w-full">
+                <g transform="translate(50, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#f97316"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">Baterai</text>
+                </g>
+                <g transform="translate(190, 75)">
+                  <rect
+                    x="-30"
+                    y="-20"
+                    width="60"
+                    height="40"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#a3e635"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark text-xs">
+                    MCB 3
+                  </text>
+                </g>
+                <g transform="translate(330, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#22c55e"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">Inverter</text>
+                </g>
+                <path
+                  d="M 90 70 H 160"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 90 80 H 160"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 70 H 290"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 80 H 290"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div
+            id="slide-7"
+            class="slide hidden flex flex-col md:flex-row items-center gap-8"
+          >
+            <div class="w-full md:w-1/3 text-center md:text-left">
+              <div class="text-sm font-bold text-highlight">LANGKAH 4</div>
+              <h2 class="text-2xl font-bold text-glow mt-1 mb-2">
+                Distribusi ke Beban
+              </h2>
+              <p class="text-muted-dark">
+                Arus AC 220V dari Inverter diamankan oleh MCB AC dan siap
+                digunakan melalui Stop Kontak.
+              </p>
+            </div>
+            <div class="w-full md:w-2/3">
+              <svg viewBox="0 0 400 150" class="w-full">
+                <g transform="translate(50, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#22c55e"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">Inverter</text>
+                </g>
+                <g transform="translate(190, 75)">
+                  <rect
+                    x="-30"
+                    y="-20"
+                    width="60"
+                    height="40"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#eab308"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark text-xs">
+                    MCB AC
+                  </text>
+                </g>
+                <g transform="translate(330, 75)">
+                  <rect
+                    x="-40"
+                    y="-30"
+                    width="80"
+                    height="60"
+                    fill="#4a5568"
+                    class="component-box-dark"
+                    stroke="#94a3b8"
+                  ></rect>
+                  <text x="0" y="0" class="component-text-dark">
+                    Stop Kontak
+                  </text>
+                </g>
+                <path
+                  d="M 90 70 H 160"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 90 80 H 160"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 70 H 290"
+                  stroke="#ef4444"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M 220 80 H 290"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Slide 8: 3D Wiring Diagram -->
+          <div id="slide-8" class="slide hidden flex flex-col items-center">
+            <h2 class="text-2xl font-bold text-glow mb-4 text-center">
+              Simulasi Perakitan 3D
+            </h2>
+            <div id="canvas-container" class="shadow-inner shadow-black"></div>
+            <div class="flex space-x-4 mt-4">
+              <button
+                id="startAnimationBtn"
+                class="btn-primary-dark font-bold py-2 px-4 rounded-lg transition-colors"
+              >
+                Mulai Animasi
+              </button>
+              <button
+                id="resetAnimationBtn"
+                class="btn-secondary-dark font-bold py-2 px-4 rounded-lg transition-colors"
+              >
+                Reset
+              </button>
+            </div>
+            <div
+              id="animation-step-text"
+              class="text-center text-highlight font-semibold mt-4 h-6"
+            ></div>
+          </div>
+
+          <!-- Slide 9: Kesimpulan -->
+          <div
+            id="slide-9"
+            class="slide hidden flex items-center justify-center text-center h-full"
+          >
+            <h1 class="danke-title">
+              <span class="meteor-d">D</span><span class="meteor-a">a</span
+              ><span class="meteor-n">n</span><span class="meteor-k">k</span
+              ><span class="meteor-e">e</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div
+        class="bg-gray-900/70 px-6 py-4 flex items-center justify-center border-t border-gray-700"
+      >
+        <div class="flex items-center gap-4">
+          <div id="slideCounter" class="text-sm text-muted-dark"></div>
+          <button
+            id="fullscreenBtn"
+            title="Layar Penuh"
+            class="btn-icon-dark transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+
+      const presentationWrapper = document.getElementById(
+        "presentation-wrapper"
+      );
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const totalSlides = slides.length;
+      const fullscreenBtn = document.getElementById("fullscreenBtn");
+      const slideCounter = document.getElementById("slideCounter");
+      let threeAppInitialized = false;
+
+      function showSlide(index) {
+        slides.forEach((slide) => {
+          slide.classList.add("hidden", "opacity-0");
+        });
+        const targetSlide = slides[index];
+        if (targetSlide) {
+          targetSlide.classList.remove("hidden");
+          setTimeout(() => targetSlide.classList.remove("opacity-0"), 50);
+        }
+        slideCounter.textContent = `Halaman ${index + 1} dari ${totalSlides}`;
+
+        if (index === 0) {
+          document.getElementById("signature-svg").style.opacity = "1";
+          document.getElementById("final-name").style.opacity = "0";
+          animateTitle();
+          animateSignature();
+        }
+
+        if (index === 7 && !threeAppInitialized) {
+          initThreeJSApp();
+          threeAppInitialized = true;
+        }
+
+        if (index === 8) {
+          animateDanke();
+        }
+      }
+
+      function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+          currentSlide++;
+          showSlide(currentSlide);
+        }
+      }
+
+      function prevSlide() {
+        if (currentSlide > 0) {
+          currentSlide--;
+          showSlide(currentSlide);
+        }
+      }
+
+      function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+          presentationWrapper.requestFullscreen().catch((err) => {
+            alert(
+              `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
+            );
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      }
+
+      fullscreenBtn.addEventListener("click", toggleFullScreen);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") {
+          nextSlide();
+        } else if (e.key === "ArrowLeft") {
+          prevSlide();
+        }
+      });
+
+      // --- Slide 1 Animations ---
+      const names = [
+        "Qaid Iqbal Ahmady",
+        "Fairuz Mahardika Syahrul Jamal",
+        "Maulana Alfi Zamriza",
+        "Juang Mangaraja Margolang",
+        "Ikhsanul Fata",
+        "Andrikal Muna",
+        "Hizkil Maulizar",
+        "Rizki Ramadhani",
+        "Alil Fazillah",
+        "Ar Joni Yamin",
+      ];
+
+      const nameContainer = document.getElementById("name-container");
+      names.forEach((name, index) => {
+        const el = document.createElement("div");
+        el.className = "contributor-name";
+        const p = document.createElement("p");
+        p.textContent = name;
+        const angle = (index / names.length) * 2 * Math.PI;
+        const radiusX = 45; // percentage
+        const radiusY = 40; // percentage
+        const x = 50 + radiusX * Math.cos(angle);
+        const y = 50 + radiusY * Math.sin(angle);
+        el.style.left = `${x}%`;
+        el.style.top = `${y}%`;
+        el.style.transform = `translate(-50%, -50%) rotate(${
+          angle + Math.PI / 2
+        }rad)`;
+        el.appendChild(p);
+        nameContainer.appendChild(el);
+      });
+
+      const titleEl = document.getElementById("main-title");
+      function animateTitle() {
+        const text = titleEl.textContent;
+        titleEl.innerHTML = "";
+        text.split("").forEach((char, i) => {
+          const span = document.createElement("span");
+          span.textContent = char;
+          span.style.animationDelay = `${i * 0.04}s`;
+          titleEl.appendChild(span);
+        });
+      }
+
+      let signatureAnimationListener = null;
+      function animateSignature() {
+        const path = document.getElementById("signature-path");
+        const signatureSvg = document.getElementById("signature-svg");
+        const finalName = document.getElementById("final-name");
+        if (!path || !signatureSvg || !finalName) return;
+        if (signatureAnimationListener) {
+          path.removeEventListener("animationend", signatureAnimationListener);
+        }
+        signatureAnimationListener = () => {
+          signatureSvg.style.opacity = "0";
+          finalName.style.opacity = "1";
+        };
+        path.addEventListener("animationend", signatureAnimationListener, {
+          once: true,
+        });
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+        path.style.animation = "none";
+        path.getBoundingClientRect();
+        path.style.animation = "draw-signature 3s ease-in-out 0.5s forwards";
+      }
+
+      function animateDanke() {
+        const letters = document.querySelectorAll(".danke-title span");
+        letters.forEach((letter, i) => {
+          letter.className = "";
+          void letter.offsetWidth;
+          const baseClass = "meteor-";
+          const char = "danke"[i];
+          letter.classList.add(baseClass + char);
+          letter.style.animationDelay = `${i * 0.1}s`;
+        });
+      }
+
+      showSlide(currentSlide);
+
+      // --- Three.js Application Logic (Slide 8) ---
+      function initThreeJSApp() {
+        const container = document.getElementById("canvas-container");
+        const stepText = document.getElementById("animation-step-text");
+        if (!container) return;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a202c);
+        const camera = new THREE.PerspectiveCamera(
+          50,
+          container.clientWidth / container.clientHeight,
+          0.1,
+          1000
+        );
+        camera.position.set(0, 15, 25);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
+        directionalLight.position.set(-15, 20, 10);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        scene.add(directionalLight);
+
+        const pointLight = new THREE.PointLight(0x38bdf8, 0.5, 100);
+        pointLight.position.set(0, 5, 10);
+        scene.add(pointLight);
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        const boardY = -1.5;
+        const board = new THREE.Mesh(
+          new THREE.BoxGeometry(22, 0.4, 16),
+          new THREE.MeshStandardMaterial({
+            color: 0x2d3748,
+            roughness: 0.9,
+            metalness: 0.1,
+          })
+        );
+        board.position.y = boardY - 0.2;
+        board.receiveShadow = true;
+        group.add(board);
+
+        const components = {};
+
+        function createTextSprite(message, x, y, z) {
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.width = 256;
+          canvas.height = 64;
+          context.font = "Bold 32px Inter, Arial";
+          context.fillStyle = "rgba(229, 231, 235, 0.9)";
+          context.fillText(message, 0, 40);
+          const texture = new THREE.CanvasTexture(canvas);
+          const spriteMaterial = new THREE.SpriteMaterial({
+            map: texture,
+            sizeAttenuation: true,
+          });
+          const sprite = new THREE.Sprite(spriteMaterial);
+          sprite.scale.set(4, 1, 1);
+          sprite.position.set(x, y, z);
+          return sprite;
+        }
+
+        function createSolarPanel() {
+          const panelGroup = new THREE.Group();
+          const frameMat = new THREE.MeshStandardMaterial({
+            color: 0x71717a,
+            metalness: 0.8,
+            roughness: 0.4,
+          });
+          const cellMat = new THREE.MeshStandardMaterial({
+            color: 0x1e3a8a,
+            roughness: 0.2,
+            emissive: "#0ea5e9",
+            emissiveIntensity: 0.05,
+          });
+          const frame = new THREE.Mesh(
+            new THREE.BoxGeometry(8, 0.4, 5),
+            frameMat
+          );
+          panelGroup.add(frame);
+          for (let i = -3.5; i < 4; i += 1) {
+            for (let j = -2.0; j < 2.5; j += 1) {
+              const cell = new THREE.Mesh(
+                new THREE.BoxGeometry(0.9, 0.42, 0.9),
+                cellMat
+              );
+              cell.position.set(i, 0, j);
+              panelGroup.add(cell);
+            }
+          }
+          const junctionBox = new THREE.Mesh(
+            new THREE.BoxGeometry(2, 0.3, 1),
+            new THREE.MeshStandardMaterial({ color: 0x333333 })
+          );
+          junctionBox.position.set(0, -0.21, 0);
+          panelGroup.add(junctionBox);
+          return panelGroup;
+        }
+        function createSCC() {
+          const sccGroup = new THREE.Group();
+          const bodyMat = new THREE.MeshStandardMaterial({
+            color: 0x3b82f6,
+            metalness: 0.2,
+            roughness: 0.5,
+          });
+          const body = new THREE.Mesh(
+            new THREE.BoxGeometry(2.5, 3, 1),
+            bodyMat
+          );
+          sccGroup.add(body);
+          const screenGeom = new THREE.PlaneGeometry(1.5, 0.8);
+          const screenMat = new THREE.MeshBasicMaterial({
+            color: 0x1e293b,
+            emissive: "#38bdf8",
+            emissiveIntensity: 0.1,
+          });
+          const screen = new THREE.Mesh(screenGeom, screenMat);
+          screen.position.set(0, 0.8, 0.51);
+          sccGroup.add(screen);
+          const finMat = new THREE.MeshStandardMaterial({
+            color: 0x2563eb,
+            metalness: 0.3,
+            roughness: 0.5,
+          });
+          for (let i = 0; i < 5; i++) {
+            const fin = new THREE.Mesh(
+              new THREE.BoxGeometry(0.1, 3, 0.5),
+              finMat
+            );
+            fin.position.set(-1 + i * 0.5, 0, -0.6);
+            sccGroup.add(fin);
+          }
+          return sccGroup;
+        }
+        function createBattery() {
+          const batGroup = new THREE.Group();
+          const body = new THREE.Mesh(
+            new THREE.BoxGeometry(4, 2.5, 3),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 })
+          );
+          batGroup.add(body);
+          const terminalGeom = new THREE.CylinderGeometry(0.3, 0.3, 0.5, 16);
+          const posTerminal = new THREE.Mesh(
+            terminalGeom,
+            new THREE.MeshStandardMaterial({
+              color: 0xef4444,
+              metalness: 0.3,
+              roughness: 0.4,
+            })
+          );
+          posTerminal.position.set(-1, 1.5, -0.8);
+          batGroup.add(posTerminal);
+          const negTerminal = new THREE.Mesh(
+            terminalGeom,
+            new THREE.MeshStandardMaterial({
+              color: 0x3b82f6,
+              metalness: 0.3,
+              roughness: 0.4,
+            })
+          );
+          negTerminal.position.set(1, 1.5, -0.8);
+          batGroup.add(negTerminal);
+          return batGroup;
+        }
+        function createInverter() {
+          const invGroup = new THREE.Group();
+          const bodyMat = new THREE.MeshStandardMaterial({
+            color: 0x16a34a,
+            metalness: 0.2,
+            roughness: 0.5,
+          });
+          const body = new THREE.Mesh(
+            new THREE.BoxGeometry(3.5, 2.5, 2.5),
+            bodyMat
+          );
+          invGroup.add(body);
+          const finMat = new THREE.MeshStandardMaterial({
+            color: 0x15803d,
+            metalness: 0.3,
+            roughness: 0.5,
+          });
+          for (let i = 0; i < 8; i++) {
+            const fin = new THREE.Mesh(
+              new THREE.BoxGeometry(3.5, 0.1, 1),
+              finMat
+            );
+            fin.position.set(0, 1 - i * 0.3, -1.5);
+            invGroup.add(fin);
+          }
+          return invGroup;
+        }
+        function createMCB(color) {
+          const mcbGroup = new THREE.Group();
+          const body = new THREE.Mesh(
+            new THREE.BoxGeometry(0.7, 1.8, 1.2),
+            new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.8 })
+          );
+          mcbGroup.add(body);
+          const switchGeom = new THREE.BoxGeometry(0.4, 0.6, 0.2);
+          const switchMesh = new THREE.Mesh(
+            switchGeom,
+            new THREE.MeshStandardMaterial({ color: color })
+          );
+          switchMesh.position.set(0, 0.2, 0.61);
+          mcbGroup.add(switchMesh);
+          return mcbGroup;
+        }
+        function createSocket() {
+          const socketGroup = new THREE.Group();
+          const plate = new THREE.Mesh(
+            new THREE.BoxGeometry(1.5, 1.5, 0.3),
+            new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.7 })
+          );
+          socketGroup.add(plate);
+          const holeGeom = new THREE.CylinderGeometry(0.15, 0.15, 0.2, 8);
+          const holeMat = new THREE.MeshBasicMaterial({ color: 0x1e293b });
+          const hole1 = new THREE.Mesh(holeGeom, holeMat);
+          hole1.rotation.x = Math.PI / 2;
+          hole1.position.set(-0.35, 0, 0.15);
+          socketGroup.add(hole1);
+          const hole2 = hole1.clone();
+          hole2.position.x = 0.35;
+          socketGroup.add(hole2);
+          return socketGroup;
+        }
+
+        const componentConstructors = {
+          panel: {
+            constructor: createSolarPanel,
+            pos: [-6, boardY + 0.2, -4],
+            label: "PANEL SURYA",
+            labelOffset: [0, 1.5, 0],
+          },
+          mcb_pv: {
+            constructor: () => createMCB(0xec4899),
+            pos: [-9, boardY + 0.9, 0],
+            label: "MCB PV",
+            labelOffset: [0, 1.8, 0],
+          },
+          scc: {
+            constructor: createSCC,
+            pos: [-9, boardY + 1.5, 4],
+            label: "SCC",
+            labelOffset: [0, 2.5, 0],
+          },
+          mcb_bat: {
+            constructor: () => createMCB(0x8b5cf6),
+            pos: [-5, boardY + 0.9, 6],
+            label: "MCB Baterai",
+            labelOffset: [0, 1.8, 0],
+          },
+          battery: {
+            constructor: createBattery,
+            pos: [0, boardY + 1.25, 6],
+            label: "BATERAI",
+            labelOffset: [0, 2.5, 0],
+          },
+          mcb_inv: {
+            constructor: () => createMCB(0xa3e635),
+            pos: [5, boardY + 0.9, 6],
+            label: "MCB Inverter",
+            labelOffset: [0, 1.8, 0],
+          },
+          inverter: {
+            constructor: createInverter,
+            pos: [9, boardY + 1.25, 4],
+            label: "INVERTER",
+            labelOffset: [0, 2.5, 0],
+          },
+          mcb_ac: {
+            constructor: () => createMCB(0xeab308),
+            pos: [9, boardY + 0.9, 0],
+            label: "MCB AC",
+            labelOffset: [0, 1.8, 0],
+          },
+          socket: {
+            constructor: createSocket,
+            pos: [9, boardY + 0.75, -4],
+            label: "STOP KONTAK",
+            labelOffset: [0, 1.8, 0],
+          },
+        };
+
+        for (const name in componentConstructors) {
+          const data = componentConstructors[name];
+          const componentGroup = data.constructor();
+          componentGroup.position.set(...data.pos);
+          componentGroup.traverse((child) => {
+            if (child.isMesh) child.castShadow = true;
+          });
+          group.add(componentGroup);
+          const labelPos = new THREE.Vector3(...data.pos).add(
+            new THREE.Vector3(...data.labelOffset)
+          );
+          const label = createTextSprite(
+            data.label,
+            labelPos.x,
+            labelPos.y,
+            labelPos.z
+          );
+          group.add(label);
+          components[name] = componentGroup;
+        }
+
+        let isMouseDown = false,
+          prevMouseX = 0,
+          prevMouseY = 0;
+        container.addEventListener("mousedown", (e) => {
+          isMouseDown = true;
+          prevMouseX = e.clientX;
+          prevMouseY = e.clientY;
+        });
+        container.addEventListener("mouseup", () => (isMouseDown = false));
+        container.addEventListener("mouseleave", () => (isMouseDown = false));
+        container.addEventListener("mousemove", (e) => {
+          if (!isMouseDown) return;
+          const deltaX = e.clientX - prevMouseX;
+          const deltaY = e.clientY - prevMouseY;
+          group.rotation.y += deltaX * 0.005;
+          group.rotation.x += deltaY * 0.005;
+          prevMouseX = e.clientX;
+          prevMouseY = e.clientY;
+        });
+
+        const cables = [];
+        const animationSteps = [
+          {
+            text: "1. Panel Surya (+) → MCB PV (+)",
+            from: components.panel,
+            to: components.mcb_pv,
+            fromOff: [4, 0, 0.5],
+            toOff: [0, 0.9, 0.7],
+          },
+          {
+            text: "1. Panel Surya (-) → MCB PV (-)",
+            from: components.panel,
+            to: components.mcb_pv,
+            fromOff: [4, 0, -0.5],
+            toOff: [0, 0.9, -0.7],
+            color: 0x3b82f6,
+          },
+          {
+            text: "2. MCB PV (+) → SCC (PV IN +)",
+            from: components.mcb_pv,
+            to: components.scc,
+            fromOff: [0, -0.9, 0.7],
+            toOff: [-0.8, 1.5, 0],
+          },
+          {
+            text: "2. MCB PV (-) → SCC (PV IN -)",
+            from: components.mcb_pv,
+            to: components.scc,
+            fromOff: [0, -0.9, -0.7],
+            toOff: [-0.3, 1.5, 0],
+            color: 0x3b82f6,
+          },
+          {
+            text: "3. SCC (BAT +) → MCB Baterai (+)",
+            from: components.scc,
+            to: components.mcb_bat,
+            fromOff: [0.3, -1.5, 0],
+            toOff: [0, 0.9, 0.7],
+          },
+          {
+            text: "3. SCC (BAT -) → MCB Baterai (-)",
+            from: components.scc,
+            to: components.mcb_bat,
+            fromOff: [0.8, -1.5, 0],
+            toOff: [0, 0.9, -0.7],
+            color: 0x3b82f6,
+          },
+          {
+            text: "4. MCB Baterai (+) → Baterai (+)",
+            from: components.mcb_bat,
+            to: components.battery,
+            fromOff: [0, -0.9, 0.7],
+            toOff: [-1, 1.75, -0.8],
+          },
+          {
+            text: "4. MCB Baterai (-) → Baterai (-)",
+            from: components.mcb_bat,
+            to: components.battery,
+            fromOff: [0, -0.9, -0.7],
+            toOff: [1, 1.75, -0.8],
+            color: 0x3b82f6,
+          },
+          {
+            text: "5. Baterai (+) → MCB Inverter (+)",
+            from: components.battery,
+            to: components.mcb_inv,
+            fromOff: [-1, 1.75, 0.8],
+            toOff: [0, 0.9, 0.7],
+          },
+          {
+            text: "5. Baterai (-) → MCB Inverter (-)",
+            from: components.battery,
+            to: components.mcb_inv,
+            fromOff: [1, 1.75, 0.8],
+            toOff: [0, 0.9, -0.7],
+            color: 0x3b82f6,
+          },
+          {
+            text: "6. MCB Inverter (+) → Inverter (DC IN +)",
+            from: components.mcb_inv,
+            to: components.inverter,
+            fromOff: [0, -0.9, 0.7],
+            toOff: [-1, -1.25, 0],
+          },
+          {
+            text: "6. MCB Inverter (-) → Inverter (DC IN -)",
+            from: components.mcb_inv,
+            to: components.inverter,
+            fromOff: [0, -0.9, -0.7],
+            toOff: [1, -1.25, 0],
+            color: 0x3b82f6,
+          },
+          {
+            text: "7. Inverter (AC OUT) → MCB AC",
+            from: components.inverter,
+            to: components.mcb_ac,
+            fromOff: [1.75, 0.5, 0],
+            toOff: [0, 0.9, 0.7],
+          },
+          {
+            text: "7. Inverter (AC OUT) → MCB AC",
+            from: components.inverter,
+            to: components.mcb_ac,
+            fromOff: [1.75, -0.5, 0],
+            toOff: [0, 0.9, -0.7],
+            color: 0x3b82f6,
+          },
+          {
+            text: "8. MCB AC (+) → Stop Kontak (+)",
+            from: components.mcb_ac,
+            to: components.socket,
+            fromOff: [0, -0.9, 0.7],
+            toOff: [0, 0, -0.15],
+          },
+          {
+            text: "8. MCB AC (-) → Stop Kontak (-)",
+            from: components.mcb_ac,
+            to: components.socket,
+            fromOff: [0, -0.9, -0.7],
+            toOff: [0.5, 0, -0.15],
+            color: 0x3b82f6,
+          },
+        ];
+
+        function createGrowingTube(start, end, color = 0xef4444) {
+          const highY = boardY + 4; // Cable arch height
+          const midX = (start.x + end.x) / 2;
+          const midZ = (start.z + end.z) / 2;
+          const points = [
+            start,
+            new THREE.Vector3(start.x, highY, start.z),
+            new THREE.Vector3(midX, highY, midZ),
+            new THREE.Vector3(end.x, highY, end.z),
+            end,
+          ];
+          const curve = new THREE.CatmullRomCurve3(points);
+          const geometry = new THREE.TubeGeometry(curve, 32, 0.09, 8, false);
+          const material = new THREE.MeshToonMaterial({ color });
+          const tube = new THREE.Mesh(geometry, material);
+          tube.scale.z = 0;
+          group.add(tube);
+          cables.push(tube);
+          return tube;
+        }
+
+        let currentStep = 0;
+        let animationInterval;
+
+        function runAnimation() {
+          if (currentStep >= animationSteps.length) {
+            clearInterval(animationInterval);
+            stepText.textContent = "Perakitan Selesai!";
+            document.getElementById("startAnimationBtn").disabled = true;
+            return;
+          }
+          const step = animationSteps[currentStep];
+          const startPos = step.from.position
+            .clone()
+            .add(new THREE.Vector3(...step.fromOff));
+          const endPos = step.to.position
+            .clone()
+            .add(new THREE.Vector3(...step.toOff));
+          const tube = createGrowingTube(startPos, endPos, step.color);
+
+          let scale = 0;
+          const growInterval = setInterval(() => {
+            scale += 0.04;
+            tube.scale.z = Math.min(scale, 1);
+            if (scale >= 1) clearInterval(growInterval);
+          }, 20);
+
+          stepText.textContent = step.text;
+          currentStep++;
+        }
+
+        document
+          .getElementById("startAnimationBtn")
+          .addEventListener("click", () => {
+            resetAnimation();
+            document.getElementById("startAnimationBtn").disabled = true;
+            animationInterval = setInterval(runAnimation, 1500);
+          });
+
+        function resetAnimation() {
+          clearInterval(animationInterval);
+          cables.forEach((c) => group.remove(c));
+          cables.length = 0;
+          currentStep = 0;
+          stepText.textContent = "Klik 'Mulai Animasi' untuk melihat proses.";
+          document.getElementById("startAnimationBtn").disabled = false;
+        }
+        document
+          .getElementById("resetAnimationBtn")
+          .addEventListener("click", resetAnimation);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener("resize", () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+        resetAnimation();
+      }
+    </script>
+  </body>
+</html>
